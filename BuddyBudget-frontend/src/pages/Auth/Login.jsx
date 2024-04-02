@@ -1,21 +1,54 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import ConstumAxios from "../../api/ConstumAxios";
 
 const Login = () => {
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState([]);
+  // const [isSubmitting, setIsSubmitting] = useState();
+  const [serverError, setServerError] = useState(null);
+
   const navigate = useNavigate();
 
-  const 
-
+  const handelLogin = async (event) => {
+    event.preventDefault();
+    try {
+      const response = await ConstumAxios.post("/login", { email, password });
+      localStorage.setItem("token", response.data.token);
+      localStorage.setItem("user", JSON.stringify(response.data.user));
+      setEmail("");
+      setPassword("");
+      navigate("/");
+      console.log("logged");
+    } catch (error) {
+      if (error.response) {
+        if (error.response.status === 422) {
+          console.log(error.response.data.errors);
+          setErrors(error.response.data.errors);
+        } else {
+          // Handle other types of errors
+          console.error("Server error:", error.response.data.message);
+          setServerError(error.response.data.message);
+        }
+      } else if (error.request) {
+        // The request was made but no response was received
+        console.error("No response received:", error.request);
+      } else {
+        // Something happened in setting up the request that triggered an error
+        console.error("Request error:", error.message);
+      }
+    }
+  };
 
   return (
     <section className="bg-white dark:bg-gray-900">
       <div className="container px-6 py-24 mx-auto lg:py-32">
         <div className="mt-8 lg:w-1/2 lg:mt-0 mx-auto">
-          <form className="w-full lg:max-w-xl">
+          <form className="w-full lg:max-w-xl" onSubmit={handelLogin}>
+            {serverError && (
+              <div className="text-red-500 text-sm m-2">{serverError}</div>
+            )}
             <div className="relative flex items-center">
               <span className="absolute">
                 <svg
@@ -24,11 +57,11 @@ const Login = () => {
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
-                  stroke-width="2"
+                  strokeWidth="2"
                 >
                   <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                     d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
                   />
                 </svg>
@@ -36,10 +69,15 @@ const Login = () => {
 
               <input
                 type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 className="block w-full py-3 text-gray-700 bg-white border rounded-lg px-11 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
                 placeholder="Email address"
               ></input>
             </div>
+            {errors.email && (
+              <div className="text-red-500 text-sm m-2">{errors.email[0]}</div>
+            )}
 
             <div className="relative flex items-center mt-4">
               <span className="absolute">
@@ -49,11 +87,11 @@ const Login = () => {
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
-                  stroke-width="2"
+                  strokeWidth="2"
                 >
                   <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                     d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
                   />
                 </svg>
@@ -61,11 +99,17 @@ const Login = () => {
 
               <input
                 type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 className="block w-full px-10 py-3 text-gray-700 bg-white border rounded-lg dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
                 placeholder="Password"
               ></input>
             </div>
-
+            {errors.password && (
+              <div className="text-red-500 text-sm m-2">
+                {errors.password[0]}
+              </div>
+            )}
             <div className="mt-8 md:flex md:items-center">
               <button className="w-full px-6 py-3 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-500 rounded-lg md:w-1/2 hover:bg-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50">
                 Sign in

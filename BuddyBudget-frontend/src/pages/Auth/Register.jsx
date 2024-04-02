@@ -14,7 +14,9 @@ const Register = () => {
   const handelRegister = async (event) => {
     event.preventDefault();
     try{
-      await ConstumAxios.post('/register', {name, email, password});
+      const response = await ConstumAxios.post('/register', {name, email, password});
+      localStorage.setItem("token", response.data.token);
+      localStorage.setItem("user", JSON.stringify(response.data.user));
       setEmail("");
       setPassword("");
       navigate("/");

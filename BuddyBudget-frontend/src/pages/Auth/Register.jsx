@@ -19,7 +19,7 @@ const Register = () => {
       localStorage.setItem("user", JSON.stringify(response.data.user));
       setEmail("");
       setPassword("");
-      navigate("/");
+      navigate("/expences");
       console.log("registred");
     }catch(error){
       if (error.response) {

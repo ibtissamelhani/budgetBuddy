@@ -19,7 +19,7 @@ const Login = () => {
       localStorage.setItem("user", JSON.stringify(response.data.user));
       setEmail("");
       setPassword("");
-      navigate("/");
+      navigate("/expences");
       console.log("logged");
     } catch (error) {
       if (error.response) {

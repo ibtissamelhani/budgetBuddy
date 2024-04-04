@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ConstumAxios from "../../api/ConstumAxios";
+import AuthContext from "../../context/AuthContext";
 
 const Register = () => {
 
@@ -8,6 +9,9 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState([]);
+
+  const {setUser,  setIsAuthenticated, setToken } = useContext(AuthContext)
+
 
   const navigate = useNavigate();
 
@@ -17,10 +21,18 @@ const Register = () => {
       const response = await ConstumAxios.post('/register', {name, email, password});
       localStorage.setItem("token", response.data.token);
       localStorage.setItem("user", JSON.stringify(response.data.user));
+      
+      setUser(response.data.user);
+      setToken(response.data.token);
+      setIsAuthenticated(!!response.data.token);
+
+      
       setEmail("");
       setPassword("");
       navigate("/expences");
       console.log("registred");
+
+      
     }catch(error){
       if (error.response) {
         if (error.response.status === 422) {

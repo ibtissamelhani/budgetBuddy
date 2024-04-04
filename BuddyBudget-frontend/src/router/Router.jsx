@@ -5,6 +5,7 @@ import Register from "../pages/Auth/Register";
 import Expenses from "../pages/Expenses";
 import Logout from "../pages/Auth/Logout";
 import Root from "../pages/Root";
+import ProtectedRoute from "../utils/ProtectedRoute";
 
 
 const RouterConfig = createBrowserRouter([
@@ -26,7 +27,7 @@ const RouterConfig = createBrowserRouter([
       },
       {
         path: "/expences",
-        element: <Expenses />,
+        element: <ProtectedRoute><Expenses /></ProtectedRoute>,
       },
       {
         path: "/logout",

@@ -1,4 +1,23 @@
+import {useEffect, useState } from "react";
+import ConstumAxios from "../api/ConstumAxios";
+
 const Expenses = () => {
+  const [expenses, setExpenses] = useState([]);
+
+  useEffect(() => {
+
+    const fetchExpenses = async () => {
+      try {
+        const response = await ConstumAxios.get('/expenses');
+        setExpenses(response.data);
+      } catch (error) {
+        console.error('Error fetching expenses:', error);
+      }
+    };
+    fetchExpenses();
+  }, []);
+
+
   return (
     <div>
       <section className="container px-4 mx-auto">
@@ -37,14 +56,15 @@ const Expenses = () => {
                     </tr>
                   </thead>
                   <tbody className="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
-                    <tr>
+                    {expenses.map(expense =>(
+                    <tr key={expense.id}>
                       <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                         <div className="inline-flex items-center gap-x-3">
 
                           <div className="flex items-center gap-x-2">
                             <div>
                               <h2 className="font-medium text-gray-800 dark:text-white ">
-                                12312
+                             {expense.id}
                               </h2>
                             </div>
                           </div>
@@ -52,12 +72,12 @@ const Expenses = () => {
                       </td>
                       <td className="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                         <div className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 dark:bg-gray-800">
-                            amount
+                        {expense.amount}
                           
                         </div>
                       </td>
                       <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                        description
+                      {expense.description}
                       </td>
                       <td className="px-4 py-4 text-sm whitespace-nowrap">
                         <div className="flex items-center gap-x-6">
@@ -97,6 +117,7 @@ const Expenses = () => {
                         </div>
                       </td>
                     </tr>
+                    ))}
                   </tbody>
                 </table>
               </div>

@@ -1,5 +1,13 @@
 import axios from "axios"
 
-export default axios.create({
+
+const ConstumAxios = axios.create({
     baseURL: "http://localhost:8000/api",
-    withCredentials: true,})
+    withCredentials: true,
+
+})
+const token = localStorage.getItem("token");
+ConstumAxios.defaults.headers.common["Authorization"]=`Bearer ${token}`
+export default ConstumAxios
+
+

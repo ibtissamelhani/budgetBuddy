@@ -15,8 +15,8 @@ const NavBar = () => {
             </h1>
 
             <p className="mt-1.5 text-sm text-gray-500">
-            Welcome, {authContext.isAuthenticated
-                ? `Welcome, ${authContext.user?.name}`
+            {authContext.isAuthenticated
+                ? `user Name : ${authContext.user?.name}`
                 : "Sign In"}!              
             </p>
           </div>

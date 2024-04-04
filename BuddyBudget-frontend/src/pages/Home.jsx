@@ -1,12 +1,10 @@
-import { Outlet } from "react-router-dom"
-import NavBar from "../components/NavBar"
-
+import image from "../assets/image.webp"
 const Home = () => {
   return (
     <>
-      <NavBar />
+      
       <div className="container mx-auto">
-        <Outlet />
+        <img src={image} alt="image" className="h-4/6" />
       </div>
     </>
   )

@@ -1,8 +1,11 @@
 import { useContext } from "react";
 import AuthContext from "../../context/AuthContext";
+import { useNavigate } from 'react-router-dom';
+
 
 const Logout = () => {
   const authContext = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const handleLogout = () => {
     localStorage.removeItem("user");
@@ -10,6 +13,7 @@ const Logout = () => {
 
     authContext.setUser(null);
     authContext.setToken(null);
+    navigate("/");
   }
 
   return (

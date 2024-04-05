@@ -27,7 +27,7 @@ const Login = () => {
 
       setEmail("");
       setPassword("");
-      navigate("/expences");
+      navigate("/expenses");
 
       console.log("logged");
 

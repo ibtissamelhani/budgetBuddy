@@ -9,5 +9,3 @@ const ConstumAxios = axios.create({
 const token = localStorage.getItem("token");
 ConstumAxios.defaults.headers.common["Authorization"]=`Bearer ${token}`
 export default ConstumAxios
-
-

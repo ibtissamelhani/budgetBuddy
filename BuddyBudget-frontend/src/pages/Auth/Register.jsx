@@ -29,7 +29,7 @@ const Register = () => {
       
       setEmail("");
       setPassword("");
-      navigate("/expences");
+      navigate("/expenses");
       console.log("registred");
 
       

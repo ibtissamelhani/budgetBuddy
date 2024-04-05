@@ -2,10 +2,11 @@ import { createBrowserRouter } from "react-router-dom";
 import Home from "../pages/Home";
 import Login from "../pages/Auth/Login";
 import Register from "../pages/Auth/Register";
-import Expenses from "../pages/Expenses";
+import Expenses from "../pages/Expense/Expenses";
 import Logout from "../pages/Auth/Logout";
 import Root from "../pages/Root";
 import ProtectedRoute from "../utils/ProtectedRoute";
+import Create from "../pages/Expense/Create";
 
 
 const RouterConfig = createBrowserRouter([
@@ -26,8 +27,12 @@ const RouterConfig = createBrowserRouter([
         element: <Register />,
       },
       {
-        path: "/expences",
+        path: "/expenses",
         element: <ProtectedRoute><Expenses /></ProtectedRoute>,
+      },
+      {
+        path: "/create",
+        element: <ProtectedRoute><Create /></ProtectedRoute>,
       },
       {
         path: "/logout",

@@ -7,6 +7,7 @@ import Logout from "../pages/Auth/Logout";
 import Root from "../pages/Root";
 import ProtectedRoute from "../utils/ProtectedRoute";
 import Create from "../pages/Expense/Create";
+import Edit from "../pages/Expense/Edit";
 
 
 const RouterConfig = createBrowserRouter([
@@ -33,6 +34,10 @@ const RouterConfig = createBrowserRouter([
       {
         path: "/create",
         element: <ProtectedRoute><Create /></ProtectedRoute>,
+      },
+      {
+        path: "/expenses/:expenseId/edit",
+        element: <ProtectedRoute><Edit /></ProtectedRoute>,
       },
       {
         path: "/logout",
